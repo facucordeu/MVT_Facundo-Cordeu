@@ -2,13 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>
+        {% block title %}
+        Inicio
+        {% endblock  %}
+    </title>
 </head>
 <body>
 
-    <h2>Familiar creado:</h2>
-    <h1>{{ familiar1.nombre }}</h1>
+{% block inicio %}
 
+    <h2>Pulse el formulario que desee crear</h2>
+    <a href="formulariocurso/">Fomulario de cursos</a><br>
+    <a href="formularioestudiante/">Fomulario de estudiantes</a><br>
+    <a href="formularioprofesor/">Fomulario de profesores</a><br>
+    <br>
+    <h2>Buscar en la BD</h2>
+    <a href="buscarcurso/">Búsqueda de cursos</a><br>
+    <a href="buscarestudiante/">Búsqueda de estudiantes</a><br>
+    <a href="buscarprofesor/">Búsqueda de profesores</a>
+
+
+{% endblock %}
 
 
 

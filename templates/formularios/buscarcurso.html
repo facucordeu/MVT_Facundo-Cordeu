@@ -1,0 +1,18 @@
+{% extends 'index.html' %}
+
+{% block inicio %}
+{% block title %}
+Curso
+{% endblock %}
+
+<form action = "/inicio/buscarcurso_post/" method="GET">
+    {% csrf_token %}
+
+    {{form.as_p}}
+
+    <input type="submit" value ="Buscar">
+
+{% endblock %}
+
+
+</form>

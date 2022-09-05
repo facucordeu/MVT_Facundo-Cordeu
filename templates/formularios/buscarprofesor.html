@@ -1,0 +1,17 @@
+
+{% block inicio %}
+{% block title %}
+Profesor
+{% endblock %}
+
+<form action = "/inicio/buscarprofesor_post/" method="GET">
+    {% csrf_token %}
+
+    {{form.as_p}}
+
+    <input type="submit" value ="Buscar">
+
+{% endblock %}
+
+
+</form>
