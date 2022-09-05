@@ -1,5 +1,5 @@
 """
-ASGI config for MVTFACUNDOCORDEU project.
+ASGI config for Entrega1 CORDEU project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'MVTFACUNDOCORDEU.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Entrega1 CORDEU.settings')
 
 application = get_asgi_application()
