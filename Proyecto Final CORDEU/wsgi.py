@@ -1,5 +1,5 @@
 """
-WSGI config for Entrega1 CORDEU project.
+WSGI config for Proyecto Final CORDEU project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Entrega1 CORDEU.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Proyecto Final CORDEU.settings')
 
 application = get_wsgi_application()

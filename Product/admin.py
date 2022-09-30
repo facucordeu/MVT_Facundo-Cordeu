@@ -1,8 +1,14 @@
 from django.contrib import admin
-from Product.models import Curso, Estudiante, Profesor
+from .models import Posteo, Contacto
 
-admin.site.register(Curso)
-admin.site.register(Estudiante)
-admin.site.register(Profesor)
+class PosteoAdmin(admin.ModelAdmin):
+    list_display = ["titulo", "autor","fecha"]
+    search_fields = ["autor"]
+    list_filter = ["autor","fecha"]
+    list_per_page = 5
+
+
+admin.site.register(Posteo,PosteoAdmin)
+admin.site.register(Contacto)
 
 # Register your models here.

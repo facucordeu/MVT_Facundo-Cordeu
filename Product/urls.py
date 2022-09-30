@@ -1,16 +1,16 @@
 from django.urls import path
 from Product.views import *
+from django.contrib.auth.views import LogoutView
+from . import views
 
 urlpatterns = [
-    path('', home, name ="Inicio"),
-    path('formulariocurso/', formulariocurso, name ="AppCurso"),
-    path('formularioestudiante/', formularioestudiante, name ="AppEstudiante"),
-    path('formularioprofesor/', formularioprofesor, name ="AppProfesor"),
-    path('buscarcurso/', busquedacurso, name ="AppBuscarCurso"),
-    path('buscarcurso_post/', busqueda_curso_post, name ="AppBuscarCurso_POST"),
-    path('buscarestudiante/', busquedaestudiante, name ="AppBuscarEstudiante"),
-    path('buscarestudiante_post/', busquedaestudiante_post, name ="AppBuscarEstudiante_POST"),
-    path('buscarprofesor/', busquedaprofesor, name="AppBuscarProfesor"),
-    path('buscarprofesor_post/', busquedaprofesor_post, name="AppBuscarProfesor_POST"),
-
+    path('', inicio, name ="Inicio"),
+    path('login/', views.login_request, name="Login"),
+    path('register/', views.register, name="Register"),
+    path('logout/', LogoutView.as_view(template_name='paginas/logout.html'), name='Logout'),
+    path('contactos/', views.contacto, name="Contacto"),
+    path('crear-publicacion/', views.agregar_post, name="Agregar_post"),
+    path('listar-publicacion/', views.listar_post, name="listar_post"),
+    path('modificar-publicacion/<id>/', views.modificar_post, name="modificar_post"),
+    path('eliminar-publicacion/<id>/', views.eliminar_post, name="eliminar_post"),
 ]

@@ -1,140 +1,129 @@
 from django.shortcuts import render
 
-# Create your views here.
-from django.shortcuts import render, redirect
-from .models import *
-from .forms import *
+from django.shortcuts import get_object_or_404, redirect, render
+from django.template import loader
+from django.http import HttpResponse
+from django.shortcuts import render
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
+
+from Product.forms import UserRegistrationForm
+from .models import Posteo
+from .forms import ContactoForm, PostForm
 
 
 # Create your views here.
-def home(request):
-    return render(request, 'index.html', context={})
 
+def inicio(request):
+    posteos = Posteo.objects.all()
+    data = {
+        'posteo': posteos
+    }
+    return render(request, 'paginas/inicio.html', data)
 
-def formulariocurso(request):
-
+def login_request(request):
     if request.method == 'POST':
-        mi_formulario = formulario_curso(request.POST)
+        form = AuthenticationForm(request, data=request.POST)
 
-        if mi_formulario.is_valid():
+        if form.is_valid():
+            usuario = form.cleaned_data.get('username')
+            contra = form.cleaned_data.get('password')
 
-            data = mi_formulario.cleaned_data
+            user = authenticate(username=usuario, password=contra)
 
-            cursos = Curso(nombre=data.get('nombre'), camada=data.get('camada'))
-            cursos.save()
+            if user is not None:
+                login(request, user)
 
-            return redirect('Inicio')
+                return render(request, "paginas/bienvenida.html", {'mensaje': f"Bienvenido {usuario}"})
+            else:
+                return render(request, "paginas/bienvenida.html", {'mensaje': "Error, datos incorrectos"})
 
-    context = {'form': formulario_curso()}
+        else:
+            return render(request, "paginas/bienvenida.html", {'mensaje': "Error, formulario erroneo"})
+    form = AuthenticationForm()
 
-    return render(request, "formularios/formulariocurso.html", context)
+    return render(request, "paginas/login.html", {'form': form})
 
-def formularioestudiante(request):
 
+def register(request):
+    if request.method == "POST":
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            form.save()
+            return render(request, "paginas/bienvenida.html", {'mensaje': "Usuario Creado"})
+
+    else:
+        form = UserRegistrationForm()
+
+    return render(request, "paginas/register.html", {"form": form})
+
+
+def contacto(request):
+    data = {
+        'form': ContactoForm()
+    }
+    # valido
     if request.method == 'POST':
-        mi_formulario = formulario_estudiante(request.POST)
+        formulario = ContactoForm(data=request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            data["mensaje"] = "contacto guardado"
+        else:
+            data["form"] = formulario
 
-        if mi_formulario.is_valid():
+    return render(request, 'paginas/contacto.html', data)
 
-            data = mi_formulario.cleaned_data
 
-            estudiantes = Estudiante(nombre=data.get('nombre'), apellido=data.get('apellido'), email = data.get('email'))
-            estudiantes.save()
-
-            return redirect('Inicio')
-
-    context = {'form': formulario_estudiante()}
-
-    return render(request, "formularios/formularioestudiante.html", context)
-
-def formularioprofesor(request):
-
+def agregar_post(request):
+    data = {
+        'form': PostForm()
+    }
+    # validamos
     if request.method == 'POST':
-        mi_formulario = formulario_profesor(request.POST)
+        formulario = PostForm(data=request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            data["mensaje"] = "Post guardado"
+        else:
+            data["form"] = formulario
 
-        if mi_formulario.is_valid():
-
-            data = mi_formulario.cleaned_data
-
-            profesores = Profesor(nombre=data.get('nombre'), apellido=data.get('apellido'), email = data.get('email'))
-            profesores.save()
-
-            return redirect('Inicio')
-
-    context = {'form': formulario_profesor()}
-
-    return render(request, "formularios/formularioprofesor.html", context)
+    return render(request, 'paginas/post.html', data)
 
 
-def busquedacurso(request):
+def listar_post(request):
+    publicacion = Posteo.objects.all()
 
-    context = {
-        'form': busqueda_curso(),
-
-
+    data = {
+        'publicacion': publicacion
     }
 
-    return render(request, 'formularios/buscarcurso.html', context)
+    return render(request, 'paginas/listar.html', data)
 
 
-def busqueda_curso_post(request):
+def modificar_post(request, id):
+    publicacion = get_object_or_404(Posteo, id=id)
 
-    camada = request.GET.get('camada')
-
-    curso = Curso.objects.filter(camada__icontains = camada)
-    context = {
-        'curso': curso,
-
-
+    data = {
+        'form': PostForm(instance=publicacion)
     }
+    # Valido
+    if request.method == 'POST':
+        formulario = PostForm(data=request.POST, instance=publicacion)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request, "Modificado correctamente!")
+            return redirect(to='listar_post')
+        else:
+            data["form"] = formulario
 
-    return render(request, 'formularios/cursofiltrado.html', context)
-
-def busquedaestudiante(request):
-
-    context = {
-        'form': busqueda_estudiante(),
-
-
-    }
-
-    return render(request, 'formularios/buscarestudiante.html', context)
-
-
-def busquedaestudiante_post(request):
-
-    nombre = request.GET.get('nombre')
-
-    nombres = Estudiante.objects.filter(nombre__icontains=nombre)
-    context = {
-        'nombres': nombres,
+    return render(request, 'paginas/modificar.html', data)
 
 
-    }
-
-    return render(request, 'formularios/estudiantefiltrado.html', context)
-
-
-def busquedaprofesor(request):
-
-    context = {
-        'form': busqueda_profesor(),
-
-
-    }
-
-    return render(request, 'formularios/buscarprofesor.html', context)
-
-
-def busquedaprofesor_post(request):
-
-    nombre = request.GET.get('nombre')
-
-    nombres = Profesor.objects.filter(nombre__icontains=nombre)
-    context = {
-        'nombres': nombres,
-
-
-    }
-
-    return render(request, 'formularios/profesorfiltrado.html', context)
+def eliminar_post(request, id):
+    publicacion = get_object_or_404(Posteo, id=id)
+    publicacion.delete()
+    messages.success(request, "Eliminado correctamente!")
+    return redirect(to='listar_post')

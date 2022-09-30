@@ -1,24 +1,27 @@
+from dataclasses import field
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from django import forms
+from .models import Contacto, Posteo
 
-class formulario_curso(forms.Form):
-    nombre = forms.CharField(max_length=30)
-    camada = forms.IntegerField()
-
-class formulario_estudiante(forms.Form):
-    nombre = forms.CharField(max_length=30)
-    apellido = forms.CharField(max_length=30)
+class UserRegistrationForm(UserCreationForm):
     email = forms.EmailField()
+    password1 = forms.CharField(label='Contraseña' , widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Repetir la contraseña' , widget=forms.PasswordInput)
 
-class formulario_profesor(forms.Form):
-    nombre = forms.CharField(max_length=30)
-    apellido = forms.CharField(max_length=30)
-    email = forms.EmailField()
+    class Meta:
+        model = User
+        fields = ['username' , 'email' , 'password1' , 'password2']
+        help_texts = {k:"" for k in fields}
 
-class busqueda_curso(forms.Form):
-    camada = forms.IntegerField()
+class ContactoForm(forms.ModelForm):
 
-class busqueda_estudiante(forms.Form):
-    nombre = forms.CharField(max_length=30)
+    class Meta:
+        model = Contacto
+        fields = '__all__'
 
-class busqueda_profesor(forms.Form):
-    nombre = forms.CharField(max_length=30)
+class PostForm(forms.ModelForm):
+
+    class Meta:
+        model = Posteo
+        fields = '__all__'

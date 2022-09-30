@@ -1,27 +1,29 @@
+from pyexpat import model
 from django.db import models
 
 # Create your models here.
-from django.db import models
 
-# Create your models here.
+class Posteo(models.Model):
+    objects = None
+    titulo  = models.CharField(max_length=100)
+    fecha = models.DateField()
+    texto = models.TextField()
+    autor = models.CharField(max_length=50)
 
-class Curso(models.Model):
+    def __str__(self):
+        return self.titulo
 
-    nombre = models.CharField(max_length=30)
-    camada = models.IntegerField()
+opciones_consultas = [
+    [0, "Consulta"],
+    [1,"Reclamo"],
+    [2,"Sugerencia"],
+]
 
-class Estudiante(models.Model):
+class Contacto(models.Model):
+    nombre = models.CharField(max_length=50)
+    correo = models.EmailField()
+    tipo_consulta = models.IntegerField(choices=opciones_consultas)
+    mensaje = models.TextField()
 
-    nombre = models.CharField(max_length=30)
-    apellido = models.CharField(max_length=30)
-    email = models.EmailField()
-
-class Profesor(models.Model):
-    nombre = models.CharField(max_length=30)
-    apellido = models.CharField(max_length=30)
-    email = models.EmailField()
-
-
-
-
-
+    def __str__(self):
+        return self.nombre

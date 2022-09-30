@@ -1,0 +1,17 @@
+{% extends 'index.html' %}
+{% load static %}
+#{% block contenido %}
+
+<form class="col-lg-6 offset-lg-3 " action="" method="post">
+    <div class="row justify-content-center">
+
+        {% csrf_token%}
+
+        {{form.as_p}}
+        <span class="input-group-btn">
+        <button type="submit" id="btnEnviar" class="button">Enviar</button>
+        </span>
+    </div>
+    </form>
+
+{% endblock %}

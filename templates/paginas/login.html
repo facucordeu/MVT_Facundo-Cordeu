@@ -1,0 +1,15 @@
+
+{% extends 'index.html' %}
+{% load static %}
+{% block contenido %}
+<h2><center>Inicio de sesión</center></h2>
+<form action="" method="post" style="text-align: center; ">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit">Iniciar Sesion</button>
+
+</form>
+
+{% endblock %}
