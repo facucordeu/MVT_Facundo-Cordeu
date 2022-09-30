@@ -1,4 +1,3 @@
-# MVT_Facundo-Cordeu
+# Entrega1 CORDEU
 
-Para aclarar, creé 2 templates, uno llamado "index.html" (Donde se mostrará solo el nombre del familiar creado en el momento) 
-y "verfamiliar.html"(Donde se mostrarán los datos guardados en la base de los diferentes familiares con su fecha de nacimiento y número preferido)
+Cuando se ingrese al servidor, en la página de inicio tendrás los hipervínculos para navegar, en los que se puede ir al formulario a crear un curso nuevo con su camada "Formulario de cursos", una vez que se pone la informacióm, al apretar "Enviar" lo redireccionará directamente a lo que es la página de inicio para crear otro formulario o buscar algun formulario en la base de datos. También existe un hipervínculo similar al de curso pero este es para cargar los datos de un estudiante, y también, otro para cargar los datos de un profesor. Mismo debajo, se puede ir a buscar en la BD por "Curso", en donde se puede buscar el curso correspondiente indicando el número de camada, y se puede ir a buscar la data de/los estudiante/es o profesor/es.
