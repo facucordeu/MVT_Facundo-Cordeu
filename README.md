@@ -4,13 +4,7 @@ Esta es la entrega del proyecto final del curso de Python en Coderhouse, donde c
 
 Se utilizó CRUD:
 
-Create: Crear post
-
-Read: Ver post en inicio
-
-Update: Editar Post
-
-Delete: Eliminar post
+Create: Crear post - Read: Ver post en inicio - Update: Editar Post - Delete: Eliminar post
 
 
 Van a ver un excel donde se verán los 3 casos de prueba que hice para probar que todo esté bien. "Casos de prueba.xlsx"
