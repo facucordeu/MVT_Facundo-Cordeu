@@ -1,3 +1,13 @@
-# Entrega1 CORDEU
+# Entrega final CORDEU
 
-Cuando se ingrese al servidor, en la página de inicio tendrás los hipervínculos para navegar, en los que se puede ir al formulario a crear un curso nuevo con su camada "Formulario de cursos", una vez que se pone la informacióm, al apretar "Enviar" lo redireccionará directamente a lo que es la página de inicio para crear otro formulario o buscar algun formulario en la base de datos. También existe un hipervínculo similar al de curso pero este es para cargar los datos de un estudiante, y también, otro para cargar los datos de un profesor. Mismo debajo, se puede ir a buscar en la BD por "Curso", en donde se puede buscar el curso correspondiente indicando el número de camada, y se puede ir a buscar la data de/los estudiante/es o profesor/es.
+Esta es la entrega del proyecto final del curso de Python en Coderhouse, donde creé un Blog del Club Atlético Independiente, allí se pueden publicar noticias del equipo que se quiera, historia, cosas del presente, jugadores que pasaron, etc. Para poder editar o crear un post, se debe tener un usuario y contraseña, donde este se crea en la pestaña de registrar, sin esta sesión activa, no se puede realizar esos cambios, solo ver los post que hay creados. 
+
+Se utilizó CRUD:
+
+Create: Crear post
+
+Read: Ver post en inicio
+
+Update: Editar Post
+
+Delete: Eliminar post
