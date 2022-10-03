@@ -1,0 +1,13 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block contenido %}
+<div style="padding: 20px;">
+    <p>Usuario: {{ user.username }}</p>
+    <p>Email: {{ user.email }}</p>
+    <p>Nombre: {{ user.first_name }}</p>
+    <p>Apellido: {{ user.last_name }}</p>
+</div>
+<div style="padding: 1px;">
+<a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'editarPerfil' %}"><button type="submit">Editar Perfil</a></button>
+</div>
+{% endblock %}

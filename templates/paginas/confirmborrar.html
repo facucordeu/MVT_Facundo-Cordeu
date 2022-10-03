@@ -1,0 +1,16 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block contenido %}
+
+<form method="post" style="padding: 20px;">
+    {% csrf_token %}
+
+    Desea borrar el posteo: {{ object.titulo }} ?
+    <br>
+    <div style="padding: 10px;">
+        <button type="submit">Borrar</button>
+    </div>
+
+</form>
+
+{% endblock %}

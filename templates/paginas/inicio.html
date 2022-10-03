@@ -1,0 +1,32 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block contenido %}
+
+    <ul>
+    {% for post in posts %}
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <!-- Post preview-->
+                <div class="post-preview">
+                    <a href="{% url 'Detail' post.id %}">
+                        <h2 class="post-title">{{ post.titulo }}</h2>
+                        <h3 class="post-subtitle">{{ post.texto }}</h3>
+                    </a>
+                    <p class="post-meta">
+                        Autor:
+                        <a>{{ post.autor }} ,</a>
+                        en {{ post.fecha }}
+                    </p>
+
+                    <div class="col-sm-12 col-xs-12">
+	                <a href="{% url 'Update' post.id %}"><button class="btn btn-default" type="button"><span class="glyphicon glyphicon-step-backward"></span>&nbsp;Editar</button></a>
+                        <a href="{% url 'Delete' post.id %}"><button class="btn btn-default" type="button">Borrar&nbsp;<span class="glyphicon glyphicon-step-forward"></span></button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+</ul>
+{% endblock %}
