@@ -4,14 +4,13 @@ from django.db import models
 # Create your models here.
 
 class Posteo(models.Model):
-    objects = None
-    titulo  = models.CharField(max_length=100)
-    fecha = models.DateField()
+    titulo = models.CharField(max_length=40)
     texto = models.TextField()
-    autor = models.CharField(max_length=50)
+    fecha = models.DateField()
+    autor = models.CharField(max_length=40)
 
     def __str__(self):
-        return self.titulo
+        return self.titulo + "|" + self.autor
 
 opciones_consultas = [
     [0, "Consulta"],

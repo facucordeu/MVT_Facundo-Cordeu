@@ -1,17 +1,15 @@
 {% extends 'index.html' %}
 {% load static %}
-#{% block contenido %}
-
-<form class="col-lg-6 offset-lg-3 " action="" method="post">
-    <div class="row justify-content-center">
-
-        {% csrf_token%}
-
-        {{form.as_p}}
-        <span class="input-group-btn">
-        <button type="submit" id="btnEnviar" class="button">Enviar</button>
-        </span>
+{% block contenido %}
+<h2 style="padding: 10px; text-align: center;">¡Escribí tu post sobre Independiente!</h2>
+<form action="" method="post" style="text-align: center; ">
+    {% csrf_token %}
+    <div style="padding:20px ;">
+        {{ form.as_p }}
     </div>
-    </form>
+    <div style="padding: 10px;">
+        <button type="submit">Publicar</button>
+    </div>
+</form>
 
 {% endblock %}

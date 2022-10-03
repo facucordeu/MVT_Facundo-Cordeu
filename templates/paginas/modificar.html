@@ -1,14 +1,15 @@
 {% extends 'index.html' %}
 {% load static %}
 {% block contenido %}
-<h2>Modificar publicación</h2>
-<form action="" method="post">
-
-    {% csrf_token%}
-
-    {{form.as_p}}
-
-    <button type="submit" id="btnEnviar" class="button">Modificar</button>
-  </form>
+<h2 style="padding: 20px; text-align: center; ">Editá la publicación</h2>
+<form action="" method="post" style="text-align: center; ">
+    {% csrf_token %}
+    <div style="padding:20px ;">
+        {{ form.as_p }}
+    </div>
+    <div style="padding: 10px;">
+        <button type="submit">Publicar</button>
+    </div>
+</form>
 
 {% endblock %}

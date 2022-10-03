@@ -119,6 +119,14 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
+
+# remove STATIC_ROOT
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+
 MEDIA_URL = '/assets/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "assets")
 
@@ -126,3 +134,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "assets")
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = '/login'
