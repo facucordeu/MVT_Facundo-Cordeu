@@ -11,3 +11,6 @@ Read: Ver post en inicio
 Update: Editar Post
 
 Delete: Eliminar post
+
+
+Van a ver un excel donde se verán los 3 casos de prueba que hice para probar que todo esté bien. "Casos de prueba.xlsx"
