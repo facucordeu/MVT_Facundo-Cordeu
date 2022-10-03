@@ -8,20 +8,25 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
-from Product.forms import UserRegistrationForm
+from Product.forms import  UserEditForm, UserRegistrationForm , ContactoForm
 from .models import Posteo
 from .forms import ContactoForm, PostForm
+from django.contrib.auth.models import User
+from django.views.generic.detail import DetailView
+from django.views.generic import ListView
+from django.views.generic.edit import DeleteView , UpdateView, CreateView
 
 
 # Create your views here.
 
 def inicio(request):
     posteos = Posteo.objects.all()
-    data = {
-        'posteo': posteos
-    }
-    return render(request, 'paginas/inicio.html', data)
+    context = {'posts': posteos}
+    template2 = loader.get_template('paginas/inicio.html')
+    documento = template2.render(context)
+    return HttpResponse(documento)
 
 def login_request(request):
     if request.method == 'POST':
@@ -38,10 +43,10 @@ def login_request(request):
 
                 return render(request, "paginas/bienvenida.html", {'mensaje': f"Bienvenido {usuario}"})
             else:
-                return render(request, "paginas/bienvenida.html", {'mensaje': "Error, datos incorrectos"})
+                return render(request, "paginas/bienvenida.html", {'mensaje': "Error, el usuario o contraseña es incorrecto"})
 
         else:
-            return render(request, "paginas/bienvenida.html", {'mensaje': "Error, formulario erroneo"})
+            return render(request, "paginas/bienvenida.html", {'mensaje': "Error, el usuario o contraseña es incorrecto"})
     form = AuthenticationForm()
 
     return render(request, "paginas/login.html", {'form': form})
@@ -77,53 +82,74 @@ def contacto(request):
     return render(request, 'paginas/contacto.html', data)
 
 
-def agregar_post(request):
-    data = {
-        'form': PostForm()
-    }
-    # validamos
+
+
+@login_required
+def perfil(request, pk=None):
+    if pk:
+        user = User.objects.get(pk=pk)
+    else:
+        user = request.user
+    args = {'user': user}
+    return render(request, 'paginas/perfil.html', args)
+
+@login_required
+def editarPerfil(request):
+    usuario = request.user
+
     if request.method == 'POST':
-        formulario = PostForm(data=request.POST)
-        if formulario.is_valid():
-            formulario.save()
-            data["mensaje"] = "Post guardado"
-        else:
-            data["form"] = formulario
+        form = UserEditForm(request.POST)
+        if form.is_valid():
+            info = form.cleaned_data
 
-    return render(request, 'paginas/post.html', data)
+            usuario.email = info['email']
+            usuario.password1 = info['password1']
+            usuario.password2 = info['password2']
+            usuario.last_name = info['last_name']
+            usuario.first_name = info['first_name']
+            usuario.save()
 
+            return render(request,"paginas/bienvenida.html")
 
-def listar_post(request):
-    publicacion = Posteo.objects.all()
+    else:
+        form = UserEditForm(initial = {'email':usuario.email})
 
-    data = {
-        'publicacion': publicacion
-    }
-
-    return render(request, 'paginas/listar.html', data)
-
-
-def modificar_post(request, id):
-    publicacion = get_object_or_404(Posteo, id=id)
-
-    data = {
-        'form': PostForm(instance=publicacion)
-    }
-    # Valido
-    if request.method == 'POST':
-        formulario = PostForm(data=request.POST, instance=publicacion)
-        if formulario.is_valid():
-            formulario.save()
-            messages.success(request, "Modificado correctamente!")
-            return redirect(to='listar_post')
-        else:
-            data["form"] = formulario
-
-    return render(request, 'paginas/modificar.html', data)
+    return render(request, "paginas/editarPerfil.html", {"form":form , "usuario":usuario})
 
 
-def eliminar_post(request, id):
-    publicacion = get_object_or_404(Posteo, id=id)
-    publicacion.delete()
-    messages.success(request, "Eliminado correctamente!")
-    return redirect(to='listar_post')
+class BlogList(ListView):
+    model = Posteo
+    template_name = "paginas/inicio.html"
+
+class BlogDetail(LoginRequiredMixin,DetailView):
+    model = Posteo
+    template_name = "paginas/detalleblog.html"
+
+
+
+class BlogPost(LoginRequiredMixin,CreateView):
+    model = Posteo
+    template_name = "paginas/post.html"
+    success_url = "/"
+    fields = ['titulo' , 'fecha' , 'texto' , 'autor']
+
+
+class BlogDelete(LoginRequiredMixin, DeleteView):
+    model = Posteo
+    template_name = "paginas/confirmborrar.html"
+    success_url = "/"
+
+class BlogUpdate(LoginRequiredMixin, UpdateView):
+    model = Posteo
+    template_name = "paginas/modificar.html"
+    success_url = "/"
+    fields = ['titulo' , 'fecha' , 'texto' , 'autor']
+
+
+def about(self):
+
+    template1 = loader.get_template('paginas/about.html')
+    documento = template1.render()
+
+    return HttpResponse(documento)
+
