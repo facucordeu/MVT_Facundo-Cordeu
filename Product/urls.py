@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 from Product.views import *
 from django.contrib.auth.views import LogoutView
 from . import views
@@ -13,7 +13,7 @@ urlpatterns = [
     path('borrarBlog/<pk>', views.BlogDelete.as_view(), name="Delete"),
     path('detalleBlog/<pk>', views.BlogDetail.as_view(), name="Detail"),
     path('about/', views.about, name="About"),
-    path(r'^perfil/$', views.perfil, name="Perfil"),
+    re_path(r'^perfil/$', views.perfil, name="Perfil"),
     path('editarPerfil/', views.editarPerfil, name="editarPerfil"),
     path('createBlog/', views.BlogPost.as_view(), name="Create"),
 ]
